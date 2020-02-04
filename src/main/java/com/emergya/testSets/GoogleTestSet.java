@@ -12,7 +12,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.emergya.pageObjects.EmergyaContactPage;
 import com.emergya.pageObjects.EmergyaMainPage;
+import com.emergya.pageObjects.EmergyaWorkPage;
 import com.emergya.pageObjects.GoogleMainPage;
 import com.emergya.utils.BasicTestSet;
 
@@ -74,29 +76,24 @@ public class GoogleTestSet extends BasicTestSet {
 
         // Steps to build the stage (Pre steps)
 
-        try {
-            // Go to www.google.es
-            // Check that the google logo is displayed
-            isLogoDisplayed();
+        // Go to www.google.es
+        // Check that the google logo is displayed
+        isLogoDisplayed();
 
-            // Check that the 'Buscar con Google' button is displayed
-            isSearchButtonDisplayed();
+        // Check that the 'Buscar con Google' button is displayed
+        isSearchButtonDisplayed();
 
-            // Check that the 'Voy a tener suerte' button is displayed
-            isLuckButtonDisplayed();
+        // Check that the 'Voy a tener suerte' button is displayed
+        isLuckButtonDisplayed();
 
-            // Check that the search field is displayed
-            isSearchFieldDisplayed();
+        // Check that the search field is displayed
+        isSearchFieldDisplayed();
 
-            // Do this search 'Hello world!'
-            googleMainPage.doSearch("Hello world");
+        // Do this search 'Hello world!'
+        googleMainPage.doSearch("Hello world");
 
-            // Check that several results are displayed
-            areSeveralResults();
-
-        } finally {
-            // Steps to clear the stage (Post steps)
-        }
+        // Check that several results are displayed
+        areSeveralResultsDisplayed();
 
         log.info("[log-TestSet] " + this.getClass().getName()
                 + " - End test method: " + method.getName());
@@ -115,8 +112,6 @@ public class GoogleTestSet extends BasicTestSet {
      * - Check that the logo is displayed
      * - Access to the 'Contacto' page
      * - Check that the address is displayed
-     * - Access to the 'Trabaja con nosotros' page
-     * - Check '¿QUÉ OFRECEMOS?' section is displayed
      *
      * Post steps:
      * - Close the browser
@@ -132,33 +127,72 @@ public class GoogleTestSet extends BasicTestSet {
 
         // Steps to build the stage (Pre steps)
 
-        try {
-            // Go to www.google.es
-            // Do this search 'www.emergya.es'
-            googleMainPage.doSearch("www.emergya.es");
+        // Go to www.google.es
+        // Do this search 'www.emergya.es'
+        googleMainPage.doSearch("www.emergya.es");
 
-            // Access to 'www.emergya.es'
-            emergyaMainPage = googleMainPage.clickOnEmergyaPage();
+        // Access to 'www.emergya.es'
+        emergyaMainPage = googleMainPage.clickOnEmergyaPage();
 
-            // Check that the logo is displayed
-            isEmergyaLogoDisplayed();
+        // Check that the logo is displayed
+        isEmergyaLogoDisplayed();
 
-            // TODO: Remove the following line when you complete the test
-            assertTrue("Developing test", false);
+        // TODO: Remove the following line when you complete the test
+        // assertTrue("Developing test", false);
 
-            // Access to the 'Contacto' page
+        // Access to the 'Contacto' page
 
-            // Check that Sevilla address is displayed
+        emergyaContactPage = emergyaMainPage.clickOnEmergyaContactPage();
 
-            // Click on top right slide menu
+        // Check that Sevilla address is displayed
 
-            // Access to 'Trabaja con nosotros' page
+        isAddressSevillaDisplayed();
 
-            // Check 'Ofertas de trabajo' title
+        log.info("[log-TestSet] " + this.getClass().getName()
+                + " - End test method: " + method.getName());
+    }
 
-        } finally {
-            // Steps to clear the stage (Post steps)
-        }
+    /**
+     * Description: Do a search in Google and check work with us
+     *
+     * Pre steps:
+     * - Open the browser
+     *
+     * Steps:
+     * - Go to www.google.es
+     * - Do this search 'www.emergya.es'
+     * - Access to 'www.emergya.es'
+     * - Access to the 'Trabaja con nosotros' page
+     * - Check '¿QUÉ OFRECEMOS?' section is displayed
+     *
+     * Post steps:
+     * - Close the browser
+     *
+     */
+    @Test(description = "googleDoSearchAndCheckWorkWithUs")
+    public void googleDoSearchAndCheckWorkWithUs(Method method) {
+        log.info("[log-TestSet] " + this.getClass().getName()
+                + " - Start test method: " + method.getName());
+
+        // Variable declaration and definition
+        isReady(googleMainPage = new GoogleMainPage(driver));
+
+        // Steps to build the stage (Pre steps)
+
+        // Go to www.google.es
+        // Do this search 'www.emergya.es'
+        googleMainPage.doSearch("www.emergya.es");
+
+        // Access to 'www.emergya.es'
+        emergyaMainPage = googleMainPage.clickOnEmergyaPage();
+
+        // Access to 'Trabaja con nosotros' page
+
+        emergyaWorkPage = emergyaMainPage.clickOnWorkWithUs();
+
+        // Check 'Ofertas de trabajo' title
+
+        checkTitle("Ofertas de trabajo");
 
         log.info("[log-TestSet] " + this.getClass().getName()
                 + " - End test method: " + method.getName());
@@ -191,7 +225,7 @@ public class GoogleTestSet extends BasicTestSet {
     /**
      * This assertion check if the search return several results
      */
-    public void areSeveralResults() {
+    public void areSeveralResultsDisplayed() {
         assertTrue(
                 "There aren't several results, it should have several results",
                 this.checkSeveralResults());
@@ -252,5 +286,30 @@ public class GoogleTestSet extends BasicTestSet {
         }
         assertTrue("The logo isn't displayed, it should be displayed",
                 emergyaMainPage.isEmergyaLogoDisplayed());
+    }
+
+    /**
+     * Check if address sevilla is displayed
+     */
+    public void isAddressSevillaDisplayed() {
+        if (emergyaContactPage == null) {
+            emergyaContactPage = new EmergyaContactPage(driver);
+        }
+
+        emergyaContactPage.clickOnAddressSevilla();
+
+        assertTrue("The address isn't displayed, it should be displayed",
+                emergyaContactPage.isAddressSevillaDisplayed());
+    }
+
+    /**
+     * Check if the title is correct
+     */
+    public void checkTitle(String text) {
+        if (emergyaWorkPage == null) {
+            emergyaWorkPage = new EmergyaWorkPage(driver);
+        }
+
+        assertTrue(emergyaWorkPage.getTitle().equals(text));
     }
 }
