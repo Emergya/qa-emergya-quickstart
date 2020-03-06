@@ -68,3 +68,13 @@ _GoogleMainPage.java_ --> _googlemainpage.properties_
 3. utils: 
  * BasicTestSet - Contains PageObjects variable references. Extends DefaultTestSet.
  * Factory - Generic class to do pre-steps and post-steps method. Extends DefaultTestSet.
+
+## src/test/java folder:
+1. runner: In this package we will have the classes that make TestNG run cucumber. All these classes extend the abstract
+class AbstractTestNGCucumberTests. By default, we include the class TestNGCucumberRunner that will run all the feature
+files in folder src/test/resources/features and will look for step definitions in package stepDefinitions.
+2. stepDefinitions: Here we will include all classes that provide step definitions for our feature cucumber files. All these classes should extend the class BasicStepsDefinitions (that extends DefaultTestSet). This is the equivalent
+to BasicTestSets in a "regular" TestNG project so _@before_ and _@after_ methods should/can be defined here
+
+## src/test/resources folder:
+1. features: We should include all our feature cucumber files here. However, in we change some configuration we could use other path.

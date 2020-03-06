@@ -16,4 +16,5 @@ public abstract class BasicTestSet extends DefaultTestSet {
     protected EmergyaContactPage emergyaContactPage;
     protected EmergyaWorkPage emergyaWorkPage;
 
+
 }
