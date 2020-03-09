@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -23,6 +24,7 @@ import com.emergya.utils.BasicTestSet;
  * @author Jose Antonio Sanchez <jasanchez@emergya.com>
  * @author Ivan Bermudez <ibermudez@emergya.com>
  * @author Ivan Gomez <igomez@emergya.com>
+ * @author Antonio Pérez <aoviedo@emergya.com>
  */
 public class GoogleTestSet extends BasicTestSet {
 
@@ -31,18 +33,18 @@ public class GoogleTestSet extends BasicTestSet {
     public GoogleTestSet() {
         super();
     }
-
-    @Override
-    @BeforeMethod(description = "startTest")
-    public void before() {
-        super.before();
-    }
-
+    
+    /**
+     * PLEASE NOTICE: This was in our original example for this framework. This is a bad practice
+     * because it overrides the method coded in class BasicTestSet, but it does not execute it.
+     * In fact, in this case, we would provoke an exception because this method closes the driver
+     * before we set the score for our test (if the test was pass or fail) so it won't work
+     * 
     @Override
     @AfterMethod(description = "endTest")
     public void afterAllIsSaidAndDone() {
         super.afterAllIsSaidAndDone();
-    }
+    }**/
 
     // **************** TESTS ****************
     // ------ EMERGYA QA SAMPLE TEST ------ //
@@ -66,14 +68,26 @@ public class GoogleTestSet extends BasicTestSet {
      * - Close the browser
      *
      */
-    @Test(description = "googleMainPageSearch")
-    public void googleMainPageSearch(Method method) {
+    /**
+     * PLEASE NOTICE: Now our annotations are different. Before our dataProvider was "method" now, it is
+     * "remoteParams" this is needed because remoteParams are the parameters to use to connect to
+     * CrossBrowserTesting, start a session there with a driver and run our tests there
+     * @param remoteParams
+     */
+    @Test(description = "googleMainPageSearch", dataProvider = "remoteParams")
+    public void googleMainPageSearch(String remoteParams) {
+    	// As we don't have the parameter method in this method, if we want to keep the style
+    	//of our logs, we have to execute this to get the name of the method that is being run
+    	//at the moment
+    	String nameofCurrMethod = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName();
         log.info("[log-TestSet] " + this.getClass().getName()
-                + " - Start test method: " + method.getName());
+                + " - Start test method: " + nameofCurrMethod);
 
         // Variable declaration and definition
         isReady(googleMainPage = new GoogleMainPage(driver));
-
+        
         // Steps to build the stage (Pre steps)
 
         // Go to www.google.es
@@ -95,8 +109,8 @@ public class GoogleTestSet extends BasicTestSet {
         // Check that several results are displayed
         areSeveralResultsDisplayed();
 
-        log.info("[log-TestSet] " + this.getClass().getName()
-                + " - End test method: " + method.getName());
+       log.info("[log-TestSet] " + this.getClass().getName()
+                + " - End test method: " + nameofCurrMethod);
     }
 
     /**
@@ -117,10 +131,13 @@ public class GoogleTestSet extends BasicTestSet {
      * - Close the browser
      *
      */
-    @Test(description = "googleDoSearchAndAccessToPage")
-    public void googleDoSearchAndAccessToPage(Method method) {
+    @Test(description = "googleDoSearchAndAccessToPage", dataProvider = "remoteParams")
+    public void googleDoSearchAndAccessToPage(String remoteParams) {
+    	String nameofCurrMethod = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName();
         log.info("[log-TestSet] " + this.getClass().getName()
-                + " - Start test method: " + method.getName());
+                + " - Start test method: " + nameofCurrMethod);
 
         // Variable declaration and definition
         isReady(googleMainPage = new GoogleMainPage(driver));
@@ -149,7 +166,7 @@ public class GoogleTestSet extends BasicTestSet {
         isAddressSevillaDisplayed();
 
         log.info("[log-TestSet] " + this.getClass().getName()
-                + " - End test method: " + method.getName());
+                + " - End test method: " + nameofCurrMethod);
     }
 
     /**
@@ -169,11 +186,15 @@ public class GoogleTestSet extends BasicTestSet {
      * - Close the browser
      *
      */
-    @Test(description = "googleDoSearchAndCheckWorkWithUs")
-    public void googleDoSearchAndCheckWorkWithUs(Method method) {
+    @Test(description = "googleDoSearchAndCheckWorkWithUs", dataProvider = "remoteParams")
+    public void googleDoSearchAndCheckWorkWithUs(String remoteParams) {
+    	String nameofCurrMethod = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName();
+ 
         log.info("[log-TestSet] " + this.getClass().getName()
-                + " - Start test method: " + method.getName());
-
+                + " - Start test method: " + nameofCurrMethod);
+        
         // Variable declaration and definition
         isReady(googleMainPage = new GoogleMainPage(driver));
 
@@ -193,9 +214,9 @@ public class GoogleTestSet extends BasicTestSet {
         // Check 'Ofertas de trabajo' title
 
         checkTitle("Ofertas de trabajo");
-
+        
         log.info("[log-TestSet] " + this.getClass().getName()
-                + " - End test method: " + method.getName());
+                + " - End test method: " + nameofCurrMethod);
     }
 
     // ************************ Methods *************************
