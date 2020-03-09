@@ -12,7 +12,7 @@
 	<properties>
 		<!-- Parameters for test executions -->
 		<!-- Remote, Firefox, Chrome, IE -->
-		<browser>Chrome</browser>
+		<browser>Remote</browser>
 		<local.OS>ubuntu</local.OS>
 		<video.Recording.Path>target/surefire-reports/testCasesVideos</video.Recording.Path>
 		<activate.Video.Recording>true</activate.Video.Recording>
