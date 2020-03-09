@@ -43,7 +43,6 @@ public abstract class BasicTestSet extends DefaultTestSet {
     @AfterMethod(alwaysRun = true)
     public void setRemoteTestStatus(ITestResult result) {
         log.info("---------- setRemoteTestStatus - Start ----------");
-        driver.getSessionId();
         if ("Remote".equalsIgnoreCase(config.getBrowser())) {
         	try {
         		
