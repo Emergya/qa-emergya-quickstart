@@ -36,7 +36,7 @@ to CrossBrowserTesting:
 		<remoteURL>hub.crossbrowsertesting.com:80/wd/hub</remoteURL>
 		<finalRemoteURL>${remoteProtocol}://${remoteUserName}:${remoteUserKey}@${remoteURL}</finalRemoteURL>
 		<remoteBuild>MRS_CONSOLE_1.0</remoteBuild>
-		<remoteConfiguration>Windows 10,Chrome,80x64,1600x1200</remoteConfiguration>
+		<remoteConfiguration>Windows 10,Chrome,80,1600x1200</remoteConfiguration>
 		<remoteRecordVideo>true</remoteRecordVideo>
 		<remoteRecordNetwork>true</remoteRecordNetwork>
 ```
