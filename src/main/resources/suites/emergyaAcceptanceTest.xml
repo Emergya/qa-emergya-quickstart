@@ -7,6 +7,7 @@
 				<methods>
                     <include name="googleMainPageSearch" />
                     <include name="googleDoSearchAndAccessToPage" />
+                    <include name="googleDoSearchAndCheckWorkWithUs" />
                 </methods>
             </class>
 		</classes>

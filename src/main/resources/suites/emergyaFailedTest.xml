@@ -3,7 +3,13 @@
 (only complete test suites), the failed tests are automatically  added to this file -->
 <suite name="TestSets" enabled="true" configfailurepolicy="continue">
   <test name="FailedTests" order-by-instances="true">
-    <classes />
+    <classes>
+      <class name="com.emergya.testSets.GoogleTestSet">
+        <methods>
+          <include name="googleMainPageSearch" />
+        </methods>
+      </class>
+    </classes>
   </test>
 </suite>
 

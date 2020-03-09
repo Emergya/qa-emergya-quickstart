@@ -11,19 +11,20 @@
 
 	<properties>
 		<!-- Parameters for test executions -->
-		<browser>firefox</browser>
-		<local.OS>ubuntu</local.OS>
+		<!-- Remote, Firefox, Chrome, IE -->
+		<browser>Remote</browser>
+		<local.OS>Ubuntu</local.OS>
 		<video.Recording.Path>target/surefire-reports/testCasesVideos</video.Recording.Path>
 		<activate.Video.Recording>true</activate.Video.Recording>
 		<save.Video.For.Passed>false</save.Video.For.Passed>
-		<webdriver.chrome.driver>src/main/resources/files/software/chromedriver</webdriver.chrome.driver>
-		<webdriver.ie.driver>src/main/resources/files/software/IEDriverServer.exe</webdriver.ie.driver>
-		<webdriver.firefox.driver>src/main/resources/files/software/geckodriver</webdriver.firefox.driver>
+		<webdriver.chrome.driver>files/software/chromedriver</webdriver.chrome.driver>
+		<webdriver.ie.driver>files/software/IEDriverServer.exe</webdriver.ie.driver>
+		<webdriver.firefox.driver>files/software/geckodriver</webdriver.firefox.driver>
 
 		<!-- Versions section -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<selenium.version>3.13.0</selenium.version>
+		<selenium.version>3.141.59</selenium.version>
 		<java.version>1.8</java.version>
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 		<testng.version>6.14.2</testng.version>
@@ -34,9 +35,29 @@
 		<jaxen.jdom.version>1.0-FCS</jaxen.jdom.version>
 		<commons.version>3.7</commons.version>
 		<log4j.version>1.2.17</log4j.version>
-		<selenium-handler.version>0.0.8</selenium-handler.version>
+		<!-- This is the version for the artifact for our selenium handler which is not the same 
+		as in the default project -->
+		<selenium3-handler.version>0.0.5</selenium3-handler.version>
 		<allure.version>1.5.0.RC2</allure.version>
-		<aspectj.version>1.8.9</aspectj.version>
+		<aspectj.version>1.8.13</aspectj.version>
+		<unirest.version>1.4.9</unirest.version>
+		<jackson.version>1.9.13</jackson.version>
+		<jackson.databind.version>2.9.8</jackson.databind.version>
+		<json.simple.version>1.1</json.simple.version>
+
+		<!-- Remote configuration Crossbrowsertesting -->
+		<remoteUserName>jasanchez%40emergya.com</remoteUserName>
+		<remoteUserKey>ud30d9af8f99f11e</remoteUserKey>
+		<remoteProtocol>http</remoteProtocol>
+		<remoteURL>hub.crossbrowsertesting.com:80/wd/hub</remoteURL>
+		<finalRemoteURL>${remoteProtocol}://${remoteUserName}:${remoteUserKey}@${remoteURL}</finalRemoteURL>
+		<remoteBuild>MRS_CONSOLE_1.0</remoteBuild>
+		<remoteConfiguration>Windows 10,Chrome,80x64,1600x1200</remoteConfiguration>
+		<remoteRecordVideo>true</remoteRecordVideo>
+		<remoteRecordNetwork>true</remoteRecordNetwork>
+
+		<!-- Correct format remoteConfiguration platform, browserName, version, 
+			resolucion, deviceName -->
 
 		<!-- Default test suite -->
 		<test.suite>src/main/resources/suites/emergyaAcceptanceTest.xml</test.suite>
@@ -175,10 +196,13 @@
 			<artifactId>allure-testng-adaptor</artifactId>
 			<version>${allure.version}</version>
 		</dependency>
+		<!-- This dependency has to replace the previous dependency for our selenium handler -->
+		<!-- This is the correct dependency for the selenium handler that can handle connecting
+		to CrossBrowserTesting -->
 		<dependency>
 			<groupId>com.emergya</groupId>
-			<artifactId>selenium3-handler</artifactId>
-			<version>${selenium-handler.version}</version>
+			<artifactId>selenium3Remote</artifactId>
+			<version>${selenium3-handler.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -191,7 +215,11 @@
 			<artifactId>selenium-java</artifactId>
 			<version>${selenium.version}</version>
 		</dependency>
-
+				<dependency>
+			<groupId>com.mashape.unirest</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>${unirest.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.pojosontheweb</groupId>
 			<artifactId>monte-repack</artifactId>
