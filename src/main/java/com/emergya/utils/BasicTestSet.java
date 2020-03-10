@@ -1,10 +1,5 @@
 package com.emergya.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.Capabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 
@@ -43,7 +38,6 @@ public abstract class BasicTestSet extends DefaultTestSet {
     @AfterMethod(alwaysRun = true)
     public void setRemoteTestStatus(ITestResult result) {
         log.info("---------- setRemoteTestStatus - Start ----------");
-        driver.getSessionId();
         if ("Remote".equalsIgnoreCase(config.getBrowser())) {
         	try {
         		

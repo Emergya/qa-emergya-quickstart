@@ -52,8 +52,8 @@
 		<remoteProtocol>http</remoteProtocol>
 		<remoteURL>hub.crossbrowsertesting.com:80/wd/hub</remoteURL>
 		<finalRemoteURL>${remoteProtocol}://${remoteUserName}:${remoteUserKey}@${remoteURL}</finalRemoteURL>
-		<remoteBuild>MRS_CONSOLE_1.0</remoteBuild>
-		<remoteConfiguration>Windows 10,Chrome,80x64,1600x1200</remoteConfiguration>
+		<remoteBuild></remoteBuild>
+		<remoteConfiguration>Windows 10,Chrome,80,1600x1200</remoteConfiguration>
 		<remoteRecordVideo>true</remoteRecordVideo>
 		<remoteRecordNetwork>true</remoteRecordNetwork>
 
@@ -286,6 +286,52 @@
 			<artifactId>javax.activation-api</artifactId>
 			<version>1.2.0</version>
 		</dependency>
+		<dependency>
+        	<groupId>io.cucumber</groupId>
+        	<artifactId>cucumber-java</artifactId>
+        	<version>5.4.1</version>
+        	<scope>test</scope>
+    	</dependency>
+    	<dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-junit</artifactId>
+        <version>5.4.1</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-testng</artifactId>
+    <version>5.4.1</version>
+</dependency>
+    
+    <!-- https://mvnrepository.com/artifact/io.cucumber/gherkin -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>gherkin</artifactId>
+    <version>11.0.0</version>
+    <scope>test</scope>
+</dependency>
+    <!-- https://mvnrepository.com/artifact/io.cucumber/messages -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>messages</artifactId>
+    <version>10.0.1</version>
+</dependency>
+    <!-- https://mvnrepository.com/artifact/info.cukes/gherkin -->
+<dependency>
+    <groupId>info.cukes</groupId>
+    <artifactId>gherkin</artifactId>
+    <version>2.12.2</version>
+    <scope>provided</scope>
+</dependency>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.13</version>
+        <scope>test</scope>
+    </dependency>
+		
 	</dependencies>
 
 	<!-- Build phase -->
