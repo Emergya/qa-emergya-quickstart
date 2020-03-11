@@ -2,6 +2,8 @@ package stepDefinitions;
 
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import com.emergya.pageObjects.EmergyaContactPage;
 import com.emergya.pageObjects.EmergyaMainPage;
 import com.emergya.pageObjects.GoogleMainPage;
@@ -13,6 +15,8 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import io.cucumber.java.Scenario;
+import runner.TestMethodGenerator;
+import runner.TestNGCucumberRunnerClass;
 
 /**
  * 
@@ -49,33 +53,70 @@ public abstract class BasicStepsDefinitions extends DefaultTestSet{
 		super();
 		Object[] remoteParams = null;
 		Method method = null;
+		ImmutablePair<String, String> featureScenario = TestNGCucumberRunnerClass.scenarios.remove(0);
 		try {
+			log.info("[log-cucumberClasses] " + this.getClass().getSimpleName()
+                + " - Start isReady method");
+			log.info("[log-cucumberClasses] Executing feature" + featureScenario.getValue()
+	                + " - scenario: "+featureScenario.getKey());
+			/**
+			 * We get the parameters we will need later to pass to super.before (DefaultTestSet.before)
+			 */
 			remoteParams = super.remoteParams();
-			method = this.CucumberRemoteTest();
-			super.before(method ,remoteParams);
+			/**
+			 * We have our current feature and scenario, with those details we will build
+			 * a temporal class and method to pass to super.before (DefaultTestSet.before)
+			 */
+			String tempClassName = featureScenario.getValue().replace(" ", "_");
+			tempClassName = tempClassName.replaceAll("[^A-Za-z]+", "");
+			String testMethodName = featureScenario.getKey().replace(" ", "_");
+			testMethodName = testMethodName.replaceAll("[^A-Za-z]+", "");
+			testMethodName = "feature_"+tempClassName+"_"+testMethodName;
+			//We create and object of type testMethodGenerator that handles the creation and compilation
+			//of the temporal class we need with the method we will pass onto super.before
+			TestMethodGenerator testMethodGenerator = new TestMethodGenerator(tempClassName, testMethodName);
+			//Once created, we try to get the method
+			method = testMethodGenerator.getTestMethod(testMethodName);
 		} catch (NoSuchMethodException e) {
-			log.error("[log-TestSet] " + this.getClass().getName()
+			//In case, there is an exception, we will give it a last try and try to get the name
+			//of a predefined method using this.cucumberRemoteTest and our test in CrossBrowserTesting will
+			//be called that
+			log.error("[log-cucumberClasses] " + this.getClass().getName()
 		            + " Constructor: "+e);
+			try {
+				method = this.cucumberRemoteTest();
+			} catch (NoSuchMethodException | SecurityException e1) {
+				e1.printStackTrace();
+			}
 		} catch (SecurityException e) {
-			log.error("[log-TestSet] " + this.getClass().getName()
+			//In case, there is an exception, we will give it a last try and try to get the name
+			//of a predefined method using this.cucumberRemoteTest and our test in CrossBrowserTesting will
+			//be called that
+			log.error("[log-cucumberClasses] " + this.getClass().getName()
 		            + " Constructor: "+e);
+			try {
+				method = this.cucumberRemoteTest();
+			} catch (NoSuchMethodException | SecurityException e1) {
+				e1.printStackTrace();
+			}
 		}catch(Exception e){
-			log.error("[log-TestSet] " + this.getClass().getName()
+			log.error("[log-cucumberClasses] " + this.getClass().getName()
 		            + " Constructor: "+e);
 		}
+		//Finally, we call super.before which is where DefaultTestSet creates and initializes our Webdriver
+		// and makes it available
+		super.before(method,remoteParams);
     }
 	
 	/**
 	 * This method is used to get an object of type Method that we can use to call super.before,
-	 * we have to call this method to get our driver@Before
-public void before(Scenario scenario) {
-    this.scenario = scenario;
-}
+	 * we have to call this method to get our driver@Before. It is an alternative to using
+	 * class TestMethodGenerator, we are not using this by default.
 	 * @return a Method object needed to call super.before and get our remote driver
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
-	public Method CucumberRemoteTest() throws NoSuchMethodException, SecurityException {
+	public Method cucumberRemoteTest() throws NoSuchMethodException, SecurityException {
 		String nameofCurrMethod = new Throwable() 
                 .getStackTrace()[0] 
                 .getMethodName();

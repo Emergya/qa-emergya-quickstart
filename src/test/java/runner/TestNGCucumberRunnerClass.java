@@ -1,5 +1,13 @@
 package runner;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+
 import org.apache.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -39,10 +47,15 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(features = "src/test/resources/features",glue= {"stepDefinitions"})
 public class TestNGCucumberRunnerClass extends AbstractTestNGCucumberTests{
 	
-	static Logger log = Logger.getLogger(TestNGCucumberRunnerClass.class); 
+	static Logger log = Logger.getLogger(TestNGCucumberRunnerClass.class);
+	public static List<ImmutablePair<String,String>> scenarios = new ArrayList<ImmutablePair<String,String>>();
 	
 	@BeforeClass
 	public void Before() {
+		for(Object[] a:super.scenarios()){
+			ImmutablePair<String, String> featureScenario = new ImmutablePair<String,String>(a[0].toString(), a[1].toString());
+			scenarios.add(featureScenario);
+		}
 		log.info("[log-TestNGCucumberRunner] " + this.getClass().getName()
                 + " - Starting TestNG runner for cucumber:");
 	}
