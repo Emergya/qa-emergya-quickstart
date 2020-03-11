@@ -12,7 +12,7 @@
 	<properties>
 		<!-- Parameters for test executions -->
 		<!-- Remote, Firefox, Chrome, IE -->
-		<browser>Remote</browser>
+		<browser>Chrome</browser>
 		<local.OS>ubuntu</local.OS>
 		<video.Recording.Path>target/surefire-reports/testCasesVideos</video.Recording.Path>
 		<activate.Video.Recording>true</activate.Video.Recording>
@@ -329,7 +329,7 @@
         	<artifactId>junit</artifactId>
         	<version>4.13</version>
         	<scope>test</scope>
-    	</dependency>	
+    	</dependency>   	
 	</dependencies>
 	<!-- Build phase -->
 	<build>

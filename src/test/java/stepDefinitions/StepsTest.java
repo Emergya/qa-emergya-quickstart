@@ -1,5 +1,7 @@
 package stepDefinitions;
 
+import org.openqa.selenium.support.ui.Sleeper;
+
 import com.emergya.pageObjects.GoogleMainPage;
 
 import io.cucumber.java.After;
@@ -48,7 +50,10 @@ public class StepsTest extends BasicStepsDefinitions{
 	public void in_site(String site){
 		boolean loaded = false;
 		if(site.equals("google")) {
-			loaded = this.googleMainPage!=null && this.googleMainPage.isLogoDisplayed(); 
+			if(this.googleMainPage==null) {
+				super.googleMainPage = new GoogleMainPage(driver);
+			}
+			loaded = this.googleMainPage.isLogoDisplayed(); 
 		}
 		if(site.equals("emergya")) {
 			loaded = this.emergyaMainPage!=null && this.emergyaMainPage.isReady();
@@ -59,7 +64,7 @@ public class StepsTest extends BasicStepsDefinitions{
 		assert(loaded);
 	}
 
-	@Then("I search for {string}")
+	@When("I search for {string}")
 	public void searchToken(String searchToken) {
 		this.googleMainPage.doSearch(searchToken);
 	}
@@ -68,6 +73,10 @@ public class StepsTest extends BasicStepsDefinitions{
 	public void clickOnSearchResult(String searchResult) {
 		if(searchResult.contentEquals("Emergya main page")) {
 			this.emergyaMainPage = this.googleMainPage.clickOnEmergyaPage();
+		}
+		
+		if(searchResult.contentEquals("Emergya com page")) {
+			this.emergyaMainPage = this.googleMainPage.clickOnEmergyacomPage();
 		}
 	}
 	
@@ -80,12 +89,18 @@ public class StepsTest extends BasicStepsDefinitions{
 		assert(visible);
 	}
 	
-	@Then("click in button {string}")
+	@When("click in button {string}")
 	public void clickButton(String button) {
 		if(button.contentEquals("contact")) {
 			this.emergyaContactPage = this.emergyaMainPage.clickOnEmergyaContactPage();
 		}
 	}
+	
+	@Then("count to {int} before exiting")
+	public void countTo(Integer count) throws InterruptedException {
+		Thread.sleep(count*1000);
+	}
+	
 	/**
 	 * We have to include a method with the cucumber annotation @After that has to call to
 	 * super.afterScenario (and then we can tell it to do more things)

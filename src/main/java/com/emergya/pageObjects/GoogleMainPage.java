@@ -28,6 +28,7 @@ public class GoogleMainPage extends BasePageObject {
     private static final String LUCK_BUTTON = "luckButton";
     private static final String IMG_LOGO = "imgLogo";
     private static final String EMERGYA_PAGE = "urlEmergyaPage";
+    private static final String EMERGYA_COM_PAGE = "urlEmergyacomPage";
 
     /**
      * Constructor method
@@ -84,6 +85,23 @@ public class GoogleMainPage extends BasePageObject {
 
         if (emergyaLinkIsVisible()) {
             this.getElementByXPath(EMERGYA_PAGE).click();
+        }
+
+        log.info("[log-pageObjects]" + this.getClass().getSimpleName()
+                + "]- End clickOnEmergyaPage method");
+        return new EmergyaMainPage(driver);
+    }
+    
+    /**
+     * This method click on Emergya page
+     * @return
+     */
+    public EmergyaMainPage clickOnEmergyacomPage() {
+        log.info("[log-pageObjects]" + this.getClass().getSimpleName()
+                + "]- Start clickOnEmergyacomPage method");
+
+        if (emergyacomLinkIsVisible()) {
+            this.getElementByXPath(EMERGYA_COM_PAGE).click();
         }
 
         log.info("[log-pageObjects]" + this.getClass().getSimpleName()
@@ -154,5 +172,18 @@ public class GoogleMainPage extends BasePageObject {
                 + "]- End emergyaLinkIsVisible method");
 
         return this.isElementVisibleByXPath(EMERGYA_PAGE);
+    }
+    
+    /**
+     * Return if emergya link is visible
+     * @return
+     */
+    public boolean emergyacomLinkIsVisible() {
+        log.info("[log-pageObjects]" + this.getClass().getSimpleName()
+                + "]- Start emergyacomLinkIsVisible method");
+        log.info("[log-pageObjects]" + this.getClass().getSimpleName()
+                + "]- End emergyacomLinkIsVisible method");
+
+        return this.isElementVisibleByXPath(EMERGYA_COM_PAGE);
     }
 }
