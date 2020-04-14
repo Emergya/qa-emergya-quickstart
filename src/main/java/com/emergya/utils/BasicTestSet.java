@@ -82,7 +82,6 @@ public abstract class BasicTestSet extends DefaultTestSet {
     private JsonNode setScore(String seleniumTestId, String score) {
         // Mark a Selenium test as Pass/Fail
         HttpResponse<JsonNode> response = null;
-
         try {
             response = Unirest.put(
                     "http://crossbrowsertesting.com/api/v3/selenium/{seleniumTestId}")

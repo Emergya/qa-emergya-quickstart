@@ -1,9 +1,7 @@
 package stepDefinitions;
 
 import org.openqa.selenium.support.ui.Sleeper;
-
 import com.emergya.pageObjects.GoogleMainPage;
-
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
@@ -18,7 +16,6 @@ import io.cucumber.java.en.When;
  */
 
 public class StepsTest extends BasicStepsDefinitions{
-	
 	public StepsTest() {
 		super();
 	}
@@ -74,7 +71,6 @@ public class StepsTest extends BasicStepsDefinitions{
 		if(searchResult.contentEquals("Emergya main page")) {
 			this.emergyaMainPage = this.googleMainPage.clickOnEmergyaPage();
 		}
-		
 		if(searchResult.contentEquals("Emergya com page")) {
 			this.emergyaMainPage = this.googleMainPage.clickOnEmergyacomPage();
 		}
@@ -88,7 +84,7 @@ public class StepsTest extends BasicStepsDefinitions{
 		}
 		assert(visible);
 	}
-	
+
 	@When("click in button {string}")
 	public void clickButton(String button) {
 		if(button.contentEquals("contact")) {

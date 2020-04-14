@@ -19,7 +19,7 @@ public class EmergyaContactPage extends BasePageObject {
      */
     private static final String LINK_SEVILLA = "link_sevilla";
     private static final String DIRECCION = "direccion";
-    private static final String TITLE_CONTACT = "title_contact";
+    private static final String TITLE_CONTACT = "titleContact";
     private static final String SECTION_SPAIN = "sectionSpain";
 
     /**

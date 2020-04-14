@@ -104,6 +104,10 @@
 			<name>Ivan Gomez</name>
 			<email>igomez@emergya.com</email>
 		</developer>
+		<developer>
+			<name>Antonio Pérez</name>
+			<email>aoviedo@emergya.com</email>
+		</developer>
 	</developers>
 
 	<profiles>
