@@ -12,15 +12,15 @@
 	<properties>
 		<!-- Parameters for test executions -->
 		<!-- Remote, Firefox, Chrome, IE -->
-		<browser>Remote</browser>
+		<browser>Firefox</browser>
 		<local.OS>ubuntu</local.OS>
 		<video.Recording.Path>target/surefire-reports/testCasesVideos</video.Recording.Path>
 		<activate.Video.Recording>true</activate.Video.Recording>
 		<save.Video.For.Passed>false</save.Video.For.Passed>
 		<!-- Now our drivers are organized according to the OS where they are used, so we updated it -->
 		<webdriver.chrome.driver>src/main/resources/files/software/${local.OS}/chromedriver</webdriver.chrome.driver>
-		<webdriver.ie.driver>src/main/resourcesfiles/software/${local.OS}/IEDriverServer.exe</webdriver.ie.driver>
-		<webdriver.firefox.driver>src/main/resourcesfiles/software/${local.OS}/geckodriver</webdriver.firefox.driver>
+		<webdriver.ie.driver>src/main/resources/files/software/${local.OS}/IEDriverServer.exe</webdriver.ie.driver>
+		<webdriver.firefox.driver>src/main/resources/files/software/${local.OS}/geckodriver</webdriver.firefox.driver>
 
 		<!-- Versions section -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
